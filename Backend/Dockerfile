@@ -7,7 +7,13 @@ RUN apt-get update \
     && pip install --no-cache-dir -r requirements.txt \
     && apt-get purge -y --auto-remove gcc \
     && rm -rf /var/lib/apt/lists/*
+# copy application files and set ownership later
 COPY . .
+
+# ensure chatpyme user exists before switching
+RUN useradd --create-home --shell /bin/bash chatpyme || true \
+    && chown -R chatpyme:chatpyme /app
+
 USER chatpyme
 ENV ENV=production
 ENV PORT=8000
