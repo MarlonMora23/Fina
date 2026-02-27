@@ -1,4 +1,4 @@
-# ChatPyme / AgenteIA
+# Fina / AgenteIA
 
 Repositorio **monorepo** que agrupa el backend en **FastAPI** y un frontend en **React**, diseñado para un ERP conversacional orientado a pymes colombianas. El backend expone APIs para inventarios y finanzas, mientras que la UI consume esos endpoints.
 
