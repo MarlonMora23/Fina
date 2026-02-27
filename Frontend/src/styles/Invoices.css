@@ -1,0 +1,438 @@
+/* ================================================
+   INVOICES/FACTURAS PROFESSIONAL STYLING
+   ================================================ */
+
+:root {
+  --color-primary: #1e40af;
+  --color-primary-dark: #1e3a8a;
+  --color-primary-light: #3b82f6;
+  --color-secondary: #7c3aed;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  
+  --color-success: #059669;
+  --color-success-light: #d1fae5;
+  --color-warning: #d97706;
+  --color-warning-light: #fef3c7;
+  --color-danger: #dc2626;
+  --color-danger-light: #fee2e2;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.invoices-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-gray-50);
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ================================================
+   HEADER
+   ================================================ */
+
+.invoices-header {
+  padding: 2rem 2.5rem;
+  background: white;
+  border-bottom: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.invoices-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0 0 0.5rem 0;
+}
+
+.invoices-subtitle {
+  font-size: 0.9375rem;
+  color: var(--color-gray-500);
+  margin: 0;
+}
+
+/* ================================================
+   TOOLBAR & FILTERS
+   ================================================ */
+
+.invoices-toolbar {
+  padding: 1.5rem 2.5rem;
+  background: white;
+  border-bottom: 1px solid var(--color-gray-200);
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+
+.filter-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+}
+
+.filter-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 8px;
+  background: white;
+  color: var(--color-gray-900);
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-select:hover {
+  border-color: var(--color-primary);
+}
+
+/* ================================================
+   FILTER STATS
+   ================================================ */
+
+.filter-stats {
+  display: flex;
+  gap: 2rem;
+  margin-left: auto;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: right;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-gray-500);
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.stat-value.ingreso {
+  color: var(--color-success);
+}
+
+.stat-value.gasto {
+  color: var(--color-danger);
+}
+
+/* ================================================
+   MOVEMENTS LIST
+   ================================================ */
+
+.invoices-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 2.5rem;
+}
+
+.invoices-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-gray-500);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.movements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ================================================
+   MOVEMENT CARD
+   ================================================ */
+
+.movement-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.movement-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--color-primary-light);
+}
+
+.movement-card.ingreso {
+  border-left: 4px solid var(--color-success);
+}
+
+.movement-card.gasto {
+  border-left: 4px solid var(--color-danger);
+}
+
+/* Card Header */
+.card-header {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--color-gray-50) 0%, white 100%);
+  border-bottom: 1px solid var(--color-gray-100);
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.card-icon {
+  font-size: 1.75rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--color-gray-100);
+  flex-shrink: 0;
+}
+
+.movement-card.ingreso .card-icon {
+  background: rgba(5, 150, 105, 0.1);
+}
+
+.movement-card.gasto .card-icon {
+  background: rgba(220, 38, 38, 0.1);
+}
+
+.card-title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-category {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0 0 0.25rem 0;
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: var(--color-gray-500);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Card Body */
+.card-body {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monto-section {
+  text-align: center;
+  width: 100%;
+}
+
+.monto {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.monto.ingreso {
+  color: var(--color-success);
+}
+
+.monto.gasto {
+  color: var(--color-danger);
+}
+
+/* Card Footer */
+.card-footer {
+  padding: 1rem 1.25rem;
+  background: var(--color-gray-50);
+  border-top: 1px solid var(--color-gray-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.fecha-badge {
+  font-size: 0.8125rem;
+  color: var(--color-gray-600);
+  white-space: nowrap;
+}
+
+.tipo-badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid transparent;
+}
+
+.tipo-badge.ingreso {
+  background: var(--color-success-light);
+  color: var(--color-success);
+  border-color: rgba(5, 150, 105, 0.2);
+}
+
+.tipo-badge.gasto {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+
+@media (max-width: 1200px) {
+  .invoices-toolbar {
+    gap: 1.5rem;
+  }
+
+  .filter-stats {
+    gap: 1.5rem;
+  }
+
+  .movements-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .invoices-header {
+    padding: 1.5rem;
+  }
+
+  .invoices-title {
+    font-size: 1.5rem;
+  }
+
+  .invoices-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .filter-group {
+    min-width: 100%;
+  }
+
+  .filter-stats {
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .stat-item {
+    text-align: left;
+    flex: 1;
+  }
+
+  .invoices-list {
+    padding: 1rem 1.5rem;
+  }
+
+  .movements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .movement-card {
+    border-left-width: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .invoices-header {
+    padding: 1rem;
+  }
+
+  .invoices-title {
+    font-size: 1.25rem;
+  }
+
+  .invoices-subtitle {
+    font-size: 0.8125rem;
+  }
+
+  .invoices-toolbar {
+    padding: 1rem;
+  }
+
+  .invoices-list {
+    padding: 1rem;
+  }
+
+  .card-header {
+    padding: 1rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .card-footer {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .filter-stats {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .stat-item {
+    text-align: left;
+  }
+}
