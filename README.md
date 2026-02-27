@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# ChatPyme / AgenteIA
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Repositorio **monorepo** que agrupa el backend en **FastAPI** y un frontend en **React**, diseñado para un ERP conversacional orientado a pymes colombianas. El backend expone APIs para inventarios y finanzas, mientras que la UI consume esos endpoints.
 
-## Available Scripts
+## 📂 Estructura Principal
 
-In the project directory, you can run:
+```text
+agenteia/
+├─ Backend/            # Código Python + FastAPI
+│  ├─ app.py           # Servidor Uvicorn
+│  ├─ routes/          # Routers (inventory, financial, etc.)
+│  └─ requirements.txt
+├─ Frontend/           # Aplicación React (CRA)
+│  ├─ src/             # Componentes y estilos
+│  └─ package.json
+└─ docker-compose.yml  # Orquesta DB, Backend y Frontend
 
-### `npm start`
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ✨ Funcionalidad Destacada
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* **API REST**: Desarrollada con FastAPI y SQLAlchemy sobre PostgreSQL.
+* **Módulos Iniciales**: Rutas preparadas para inventario y finanzas.
+* **Seguridad**: CORS configurable mediante la variable `ALLOWED_ORIGINS`.
+* **Interfaz**: UI en React con dashboard financiero e inventarios.
+* **Extensibilidad**: Arquitectura de routers modulares en `app.py`.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🐳 Dockerización
 
-### `npm run build`
+Se proveen **Dockerfiles** separados y un archivo `docker-compose.yml` para levantar el stack completo de forma automática.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Levantamiento rápido (Desarrollo)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# Desde la carpeta raíz: agenteia
+docker-compose build   # Construye imágenes de backend y frontend
+docker-compose up      # Inicia DB (5432), Backend (8000) y Frontend (3000)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
+> [!IMPORTANT]
+> * El **Backend** monta el código local para permitir la recarga automática (*hot-reload*).
+> * **Accesos**: Frontend en `http://localhost:3000` | API en `http://localhost:8000`.
+> 
+> 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Variables de entorno clave:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* `ENV`: `development` / `production`
+* `DATABASE_URL`: Ejemplo: `postgresql://user:pass@db:5432/chatpyme`
+* `ALLOWED_ORIGINS`: Lista blanca para CORS.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Construir imágenes individuales
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+docker build -t chatpyme-backend:latest ./Backend
+docker build -t chatpyme-frontend:latest ./Frontend
 
-## Learn More
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🚀 Despliegue en Producción
 
-### Code Splitting
+Para llevar el proyecto a la nube (GCP, AWS, Azure):
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. **Imágenes**: Sube las imágenes construidas a un registro (GCR, DockerHub).
+2. **Configuración**:
+* Elimina los `volumes` de desarrollo en el archivo compose.
+* Cambia `ENV=production`.
+* Ajusta `ALLOWED_ORIGINS` con el dominio real.
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. **Base de Datos**: Conecta el backend a una instancia gestionada (Cloud SQL, RDS, etc.).
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🛠️ Scripts Útiles
 
-### Advanced Configuration
+### Backend (Local sin Docker)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Requiere Python 3.12 o superior.
 
-### Deployment
+```bash
+cd Backend
+env ENV=development python app.py
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```
 
-### `npm run build` fails to minify
+### Frontend (Local sin Docker)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+cd Frontend
+npm install
+npm start          # Modo desarrollo
+npm run build      # Genera carpeta build/ para producción
+
+```
+
+## 📝 Notas Adicionales
+
+* **Seguridad**: El archivo `.env` en la carpeta `Backend` contiene secretos y **no debe versionarse**.
+* **Base de Datos**: Se inicializa automáticamente; en modo `development` carga un *seed* de datos de prueba.
+* **Proxy**: El `package.json` del frontend incluye un proxy hacia el backend para simplificar el flujo de desarrollo.
